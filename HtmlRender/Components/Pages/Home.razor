@@ -1,0 +1,42 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+
+<h3>Employee List</h3>
+
+<!-- Table to display employees -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Job Title</th>
+            <th>Employee ID</th>
+            <th>Department ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in employees)
+        {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.JobTitle</td>
+                <td>@employee.EmployeeID</td>
+                <td>@employee.DepartmentID</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Employee> employees;
+
+    protected override void OnInitialized()
+    {
+        // Fetch mock employee data
+        employees = Employee.GetEmployees();
+    }
+}
+

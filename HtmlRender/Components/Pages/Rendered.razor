@@ -1,0 +1,15 @@
+﻿@page "/render"
+@inject ComponentRenderer ComponentRenderer
+
+<h3>Rendered Component</h3>
+
+<div>@(new MarkupString(renderedHtml))</div>
+
+@code {
+    private string renderedHtml;
+
+    protected override async Task OnInitializedAsync()
+    {
+        renderedHtml = await ComponentRenderer.RenderComponentToString<Home>();
+    }
+}
