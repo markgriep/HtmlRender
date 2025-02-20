@@ -1,0 +1,33 @@
+﻿@using HtmlRender.Models
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Test Number</th>
+            <th>Employee ID</th>
+            <th>Employee Name</th>
+            <th>Job Title</th>
+            <th>Test Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in EligibleForTestingList)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TestNumber</td>
+                <td>@item.EmployeeId</td>
+                <td>@item.EmployeeName</td>
+                <td>@item.JobTitle</td>
+                <td>@item.TestType</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    // Parameter to pass the list of eligible employees for testing
+    [Parameter]
+    public List<EligibleForTesting> EligibleForTestingList { get; set; } = new List<EligibleForTesting>();
+}
