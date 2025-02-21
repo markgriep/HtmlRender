@@ -25,7 +25,8 @@
 
 
 
-<button class="btn btn-primary p-2 m-5" @onclick="GenerateAPdfAsync">Gnerate PDF</button>
+<button class="btn btn-primary p-2 m-5" @onclick="ShowHtmlInAnotherPageAsync">Html in another tab</button>
+<button class="btn btn-primary p-2 m-5" @onclick="GenerateAPdfAsync">Generate PDF into another tab</button>
 
 
 
@@ -42,16 +43,16 @@
 
 
 
-    // private async Task ShowHtmlInAnotherPageAsync()
-    // {
-    //     var parameters = new Dictionary<string, object>
-    //     {
-    //         { "EligibleForTestingList", eligibleForTesting }
-    //     };
+    private async Task ShowHtmlInAnotherPageAsync()
+    {
+        var parameters = new Dictionary<string, object>
+        {
+            { "EligibleForTestingList", eligibleForTesting }
+        };
 
-    //     string htmlString = await cr.RenderComponentToStringAsync<EligibleForTestingTable>(parameters);
-    //     await JS.InvokeVoidAsync("openHtmlInNewTab", htmlString);
-    // }
+        string htmlString = await cr.RenderComponentToStringAsync<EligibleForTestingTable>(parameters);
+        await JS.InvokeVoidAsync("openHtmlInNewTab", htmlString);
+    }
 
 
     /// <summary>
