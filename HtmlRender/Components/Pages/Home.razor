@@ -79,7 +79,17 @@
     private async Task GenerateComplicatedPdfAsync()
     {
         var x = new PdfGenerator();
-        var y = x.GenerateComplicatedPdf(eligibleForTesting);
+
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+        eligibleForTesting.AddRange(eligibleForTesting);
+
+        var y = x.GenerateDataReportPdf(eligibleForTesting);
 
         var base64 = Convert.ToBase64String(y);
         await JS.InvokeVoidAsync("blazorOpenFileInNewTab", base64);
