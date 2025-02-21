@@ -28,6 +28,8 @@
 <button class="btn btn-primary p-2 m-5" @onclick="ShowHtmlInAnotherPageAsync">Html in another tab</button>
 <button class="btn btn-primary p-2 m-5" @onclick="GenerateAPdfAsync">Generate PDF into another tab</button>
 
+<button class="btn btn-primary p-2 m-5" @onclick="GenerateComplicatedPdfAsync">Generate complicated PDF</button>
+
 
 
 
@@ -70,6 +72,19 @@
 
 
     }
+
+
+
+
+    private async Task GenerateComplicatedPdfAsync()
+    {
+        var x = new PdfGenerator();
+        var y = x.GenerateComplicatedPdf(eligibleForTesting);
+
+        var base64 = Convert.ToBase64String(y);
+        await JS.InvokeVoidAsync("blazorOpenFileInNewTab", base64);
+    }
+
 
 }
 
