@@ -3,6 +3,7 @@
 
 @using HtmlRender.Models
 @using HtmlRender.Components
+@using HtmlRender.Helpers
 
 
 @inject ComponentRenderer cr
@@ -21,10 +22,11 @@
 
 <h3>Eligible for Testing</h3>
 
-<EligibleForTestingTable EligibleForTestingList="eligibleForTesting" />
 
 
-<button class="btn btn-primary p-2 m-5" @onclick="OnButtonClickAsync">Render to HTML</button>
+
+<button class="btn btn-primary p-2 m-5" @onclick="GenerateAPdfAsync">Gnerate PDF</button>
+
 
 
 
@@ -40,21 +42,33 @@
 
 
 
-    private async Task OnButtonClickAsync()
+    // private async Task ShowHtmlInAnotherPageAsync()
+    // {
+    //     var parameters = new Dictionary<string, object>
+    //     {
+    //         { "EligibleForTestingList", eligibleForTesting }
+    //     };
+
+    //     string htmlString = await cr.RenderComponentToStringAsync<EligibleForTestingTable>(parameters);
+    //     await JS.InvokeVoidAsync("openHtmlInNewTab", htmlString);
+    // }
+
+
+    /// <summary>
+    /// Handles the button click event on the component
+    /// </summary>
+    /// <returns></returns>
+    private async Task GenerateAPdfAsync()
     {
 
+        var x = new PdfGenerator();
+        var y = x.GenerateHelloWorldPdf();
+
+        var base64 = Convert.ToBase64String(y);
+        await JS.InvokeVoidAsync("blazorOpenFileInNewTab", base64);
 
 
-        var parameters = new Dictionary<string, object>
-    {
-        { "EligibleForTestingList", eligibleForTesting }
-    };
-
-
-
-        string htmlString = await cr.RenderComponentToStringAsync<EligibleForTestingTable>(parameters);
-        await JS.InvokeVoidAsync("openHtmlInNewTab", htmlString);
-       // System.Diagnostics.Debug.WriteLine(htmlString);
     }
+
 }
 
