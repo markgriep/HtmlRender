@@ -15,6 +15,18 @@
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+
+    <script>
+
+
+        function openHtmlInNewTab(htmlContent) {
+        const newWindow = window.open();
+        newWindow.document.write(htmlContent);
+        newWindow.document.close();
+        }
+
+    </script>
+
 </body>
 
 </html>

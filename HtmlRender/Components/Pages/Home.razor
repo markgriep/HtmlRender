@@ -1,8 +1,15 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 @using HtmlRender.Models
 @using HtmlRender.Components
 
+
+@inject ComponentRenderer cr
+@inject IJSRuntime JS
+
+
+<link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 <PageTitle>Home</PageTitle>
 
@@ -14,8 +21,13 @@
 
 <h3>Eligible for Testing</h3>
 
-<!-- Use the EligibleForTestingTable component -->
 <EligibleForTestingTable EligibleForTestingList="eligibleForTesting" />
+
+
+<button class="btn btn-primary p-2 m-5" @onclick="OnButtonClickAsync">Render to HTML</button>
+
+
+
 
 @code {
     private List<EligibleForTesting> eligibleForTesting;
@@ -24,6 +36,25 @@
     {
         // Fetch mock eligible for testing data
         eligibleForTesting = EligibleForTesting.GetEligibleForTestingData();
+    }
+
+
+
+    private async Task OnButtonClickAsync()
+    {
+
+
+
+        var parameters = new Dictionary<string, object>
+    {
+        { "EligibleForTestingList", eligibleForTesting }
+    };
+
+
+
+        string htmlString = await cr.RenderComponentToStringAsync<EligibleForTestingTable>(parameters);
+        await JS.InvokeVoidAsync("openHtmlInNewTab", htmlString);
+       // System.Diagnostics.Debug.WriteLine(htmlString);
     }
 }
 

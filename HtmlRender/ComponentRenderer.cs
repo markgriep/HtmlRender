@@ -26,12 +26,13 @@ namespace HtmlRender
             _loggerFactory = _serviceProvider.GetRequiredService<ILoggerFactory>();
         }
 
-        public async Task<string> RenderComponentToString<TComponent>() where TComponent : IComponent
+        public async Task<string> RenderComponentToStringAsync<TComponent>(Dictionary<string, object> parameters) where TComponent : IComponent
         {
             await using var htmlRenderer = new HtmlRenderer(_serviceProvider, _loggerFactory);
             var htmlContent = await htmlRenderer.Dispatcher.InvokeAsync(async () =>
             {
-                var result = await htmlRenderer.RenderComponentAsync<TComponent>(ParameterView.Empty);
+                var parameterView = ParameterView.FromDictionary(parameters);
+                var result = await htmlRenderer.RenderComponentAsync<TComponent>(parameterView);
                 return result.ToHtmlString();
             });
 

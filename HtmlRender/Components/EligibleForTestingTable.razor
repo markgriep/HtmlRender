@@ -1,6 +1,49 @@
 ﻿@using HtmlRender.Models
 
-<table class="table">
+
+
+<style>
+    /* Table styling */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        margin-top: 20px;
+    }
+
+    /* Header styling */
+    .custom-table th {
+        background-color: #ea88ea;
+        color: #333;
+        padding: 10px;
+        text-align: left;
+        border-bottom: 2px solid #ddd;
+    }
+
+    /* Row styling */
+    .custom-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Alternating row colors */
+    .custom-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Hover effect */
+    .custom-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Test Type column styling */
+    .custom-table td:last-child {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+</style>
+
+<table class="custom-table">
     <thead>
         <tr>
             <th>ID</th>
@@ -29,5 +72,8 @@
 @code {
     // Parameter to pass the list of eligible employees for testing
     [Parameter]
-    public List<EligibleForTesting> EligibleForTestingList { get; set; } = new List<EligibleForTesting>();
+    public List<EligibleForTesting> EligibleForTestingList { get; set; } //= new List<EligibleForTesting>();
+
+
+
 }
