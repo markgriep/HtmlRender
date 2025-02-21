@@ -17,11 +17,11 @@ namespace HtmlRender.Helpers
     {
         static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).AlignLeft();
 
-        static TextStyle DefaultTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial"); 
-        static TextStyle HeaderTextStyle => TextStyle.Default.FontSize(16).Bold().FontFamily("Arial"); 
-        static TextStyle SmallTextStyle => TextStyle.Default.FontSize(10).FontFamily("Arial"); 
-        static TextStyle TableTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial"); 
-        static TextStyle DateTimePageStyle => TextStyle.Default.FontSize(10).FontFamily("Arial"); 
+        static TextStyle DefaultTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial");
+        static TextStyle HeaderTextStyle => TextStyle.Default.FontSize(16).Bold().FontFamily("Arial");
+        static TextStyle SmallTextStyle => TextStyle.Default.FontSize(10).FontFamily("Arial");
+        static TextStyle TableTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial");
+        static TextStyle DateTimePageStyle => TextStyle.Default.FontSize(10).FontFamily("Arial");
 
 
 
@@ -54,7 +54,19 @@ namespace HtmlRender.Helpers
 
 
 
-        public byte[] GenerateDataReportPdf(List<EligibleForTesting> eligibleForTestingList)
+
+
+
+
+
+
+
+
+
+
+
+
+        public byte[] GenerateDataReportPdf(List<EligibleForTesting> eligibleForTestingList, string dotNon, int testNumber)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
@@ -64,19 +76,27 @@ namespace HtmlRender.Helpers
                 {
                     page.Size(PageSizes.A4);
                     page.Margin(1, Unit.Inch);
-                    page.DefaultTextStyle(x => x.FontSize(12));
+                    page.DefaultTextStyle(DefaultTextStyle);
 
-                    // Header
+                    // Header with report details and page number
                     page.Header()
-                        .AlignLeft()
-                        .Column(col =>
+                        .Column(column =>
                         {
-                            col.Item().Text("Eligible for Testing Report").FontSize(16).Bold();
-                            col.Item().Text($"Generated: {DateTime.Now.ToString("f", CultureInfo.InvariantCulture)}").FontSize(10);
-                        });
+                            column.Item().Row(row =>
+                            {
+                                row.RelativeItem().Text("Report ID: CU 123").Style(SmallTextStyle);
+                                row.RelativeItem().AlignCenter().Text($"Report {dotNon} Random Test Pool").Style(HeaderTextStyle);
+                                row.RelativeItem().AlignRight().Text(text =>
+                                {
+                                    text.Span("Page No: ").Style(SmallTextStyle);
+                                    text.CurrentPageNumber().Style(SmallTextStyle);
+                                });
 
-                    // Content - Table
-                    page.Content()
+                                column.Item().AlignCenter().Text($"Test Number {testNumber}  Date: {DateTime.Now.ToString("f", CultureInfo.InvariantCulture)}").Style(SmallTextStyle);
+                            });
+
+                            // Content - Table
+                            page.Content()
                         .Column(col =>
                         {
                             col.Item().PaddingVertical(10); // Adds spacing before the table
@@ -94,35 +114,63 @@ namespace HtmlRender.Helpers
                                 // Table Data
                                 foreach (var item in eligibleForTestingList)
                                 {
-                                    table.Cell().Element(CellStyle).Text(item.TestNumber.ToString());
-                                    table.Cell().Element(CellStyle).Text(item.EmployeeName);
-                                    table.Cell().Element(CellStyle).Text(item.JobTitle);
+                                    table.Cell().Element(CellStyle).Text(item.TestNumber.ToString()).Style(TableTextStyle);
+                                    table.Cell().Element(CellStyle).Text(item.EmployeeName).Style(TableTextStyle);
+                                    table.Cell().Element(CellStyle).Text(item.JobTitle).Style(TableTextStyle);
                                 }
                             });
                         });
 
-                    // Footer - Page numbering
-                    page.Footer().AlignCenter()
+                            // Footer - Page numbering
+                            page.Footer()
+                        .AlignRight()
                         .Text(text =>
                         {
-                            text.Span("Page ").FontSize(10);
-                            text.CurrentPageNumber().FontSize(12);
-                            text.Span(" of ").FontSize(10);
-                            text.TotalPages().FontSize(12);
+                            text.Span("Page ").Style(SmallTextStyle);
+                            text.CurrentPageNumber().Style(SmallTextStyle);
+                            text.Span(" of ").Style(SmallTextStyle);
+                            text.TotalPages().Style(SmallTextStyle);
                         });
-
-
-                    //page.Content().Text("Hello World").FontSize(20).Bold();
-
-
-
+                        });
                 });
+
             });
 
-            return document.GeneratePdf();
+                return document.GeneratePdf();
+
         }
 
-        // Table cell styling (no borders, left-aligned)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
