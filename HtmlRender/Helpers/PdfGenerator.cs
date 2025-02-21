@@ -18,7 +18,7 @@ namespace HtmlRender.Helpers
         static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).AlignLeft();
 
         static TextStyle DefaultTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial");
-        static TextStyle HeaderTextStyle => TextStyle.Default.FontSize(16).Bold().FontFamily("Arial");
+        static TextStyle HeaderTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial");
         static TextStyle SmallTextStyle => TextStyle.Default.FontSize(10).FontFamily("Arial");
         static TextStyle TableTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial");
         static TextStyle DateTimePageStyle => TextStyle.Default.FontSize(10).FontFamily("Arial");
@@ -74,8 +74,9 @@ namespace HtmlRender.Helpers
             {
                 container.Page(page =>
                 {
-                    page.Size(PageSizes.A4);
-                    page.Margin(1, Unit.Inch);
+
+                    page.Size(PageSizes.Letter.Landscape());
+                    page.Margin(0.5f, Unit.Inch);
                     page.DefaultTextStyle(DefaultTextStyle);
 
                     // Header with report details and page number
@@ -95,6 +96,7 @@ namespace HtmlRender.Helpers
                                 column.Item().AlignCenter().Text($"Test Number {testNumber}  Date: {DateTime.Now.ToString("f", CultureInfo.InvariantCulture)}").Style(SmallTextStyle);
                             });
 
+
                             // Content - Table
                             page.Content()
                         .Column(col =>
@@ -109,7 +111,18 @@ namespace HtmlRender.Helpers
                                     columns.RelativeColumn(); // Test Number
                                     columns.RelativeColumn(); // Employee Name
                                     columns.RelativeColumn(); // Job Title
+
                                 });
+
+
+                                //==================================
+                                // Add Table Headers
+                                table.Cell().Element(CellStyle).Text("Test Number").Style(HeaderTextStyle);
+                                table.Cell().Element(CellStyle).Text("Employee Name").Style(HeaderTextStyle);
+                                table.Cell().Element(CellStyle).Text("Job Title").Style(HeaderTextStyle);
+                                //==================================
+
+
 
                                 // Table Data
                                 foreach (var item in eligibleForTestingList)
