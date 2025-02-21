@@ -15,6 +15,20 @@ namespace HtmlRender.Helpers
 {
     public class PdfGenerator
     {
+        static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).AlignLeft();
+
+        static TextStyle DefaultTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial"); 
+        static TextStyle HeaderTextStyle => TextStyle.Default.FontSize(16).Bold().FontFamily("Arial"); 
+        static TextStyle SmallTextStyle => TextStyle.Default.FontSize(10).FontFamily("Arial"); 
+        static TextStyle TableTextStyle => TextStyle.Default.FontSize(12).FontFamily("Arial"); 
+        static TextStyle DateTimePageStyle => TextStyle.Default.FontSize(10).FontFamily("Arial"); 
+
+
+
+
+
+
+
         public byte[] GenerateHelloWorldPdf()
         {
 
@@ -40,7 +54,7 @@ namespace HtmlRender.Helpers
 
 
 
-        public byte[] GenerateComplicatedPdf(List<EligibleForTesting> eligibleForTestingList)
+        public byte[] GenerateDataReportPdf(List<EligibleForTesting> eligibleForTestingList)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
@@ -109,7 +123,6 @@ namespace HtmlRender.Helpers
         }
 
         // Table cell styling (no borders, left-aligned)
-        static IContainer CellStyle(IContainer container) => container.PaddingVertical(5).AlignLeft();
 
     }
 }
