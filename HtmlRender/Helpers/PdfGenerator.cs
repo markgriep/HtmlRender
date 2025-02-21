@@ -65,7 +65,7 @@ namespace HtmlRender.Helpers
                     page.Content()
                         .Column(col =>
                         {
-                            //col.Item().Spacing(10); // Adds spacing before the table
+                            col.Item().PaddingVertical(10); // Adds spacing before the table
 
                             col.Item().Table(table =>
                             {
@@ -88,14 +88,13 @@ namespace HtmlRender.Helpers
                         });
 
                     // Footer - Page numbering
-                    page.Footer()
-                        .AlignRight()
+                    page.Footer().AlignCenter()
                         .Text(text =>
                         {
-                            text.Span("Page ");
-                            text.CurrentPageNumber();
-                            text.Span(" of ");
-                            text.TotalPages();
+                            text.Span("Page ").FontSize(10);
+                            text.CurrentPageNumber().FontSize(12);
+                            text.Span(" of ").FontSize(10);
+                            text.TotalPages().FontSize(12);
                         });
 
 
